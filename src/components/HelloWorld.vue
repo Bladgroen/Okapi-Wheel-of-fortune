@@ -18,28 +18,8 @@
 export default {
   data() {
     return {
-      wheelPieces: [
-        "0x",
-        "0x",
-        "0x",
-        "0x",
-        "2x",
-        "2x",
-        "2x",
-        "4x",
-        "5x",
-        "6x",
-        "0x",
-        "0x",
-        "0x",
-        "0x",
-        "2x",
-        "2x",
-        "2x",
-        "4x",
-        "5x",
-        "6x",
-      ],
+      wheelPieces: ["A", "B", "C", "D"],
+      usedWheelPieces: [],
       spinning: false,
     };
   },
@@ -57,7 +37,14 @@ export default {
         array[randomIndex] = temporaryValue;
       }
 
-      return array;
+      const firstValue = array[0];
+
+      if (this.usedWheelPieces.includes(firstValue)) {
+        return this.shuffle(array);
+      } else {
+        this.usedWheelPieces.push(firstValue);
+        return array;
+      }
     },
     spinWheel() {
       if (this.spinning) return;
@@ -66,6 +53,8 @@ export default {
       const pieces = this.shuffle([...this.wheelPieces]);
       this.wheelPieces = pieces;
       console.log(this.wheelPieces);
+
+      console.log(this.usedWheelPieces);
       setTimeout(() => {
         this.spinning = false;
       }, 5000);
@@ -82,7 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 $size: 500;
-$pieceCount: 20;
+$pieceCount: 22;
 $pieceWidth: $size / $pieceCount;
 
 #wheel-container {
