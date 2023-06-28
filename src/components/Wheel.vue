@@ -18,8 +18,26 @@
 export default {
   data() {
     return {
-      wheelPieces: ["A", "B", "C", "D"],
-      usedWheelPieces: [],
+      wheelPieces: [
+        "A",
+        "B",
+        "C",
+        "D",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "O",
+        "R",
+        "S",
+        "T",
+        "V",
+        "W",
+        "Z",
+      ],
       spinning: false,
     };
   },
@@ -36,13 +54,14 @@ export default {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
       }
-
       const firstValue = array[0];
-
-      if (this.usedWheelPieces.includes(firstValue)) {
+      const storageArray = JSON.parse(localStorage.getItem("usedWheelPieces"));
+      console.log(storageArray);
+      if (storageArray.includes(firstValue)) {
         return this.shuffle(array);
       } else {
-        this.usedWheelPieces.push(firstValue);
+        storageArray.push(firstValue);
+        localStorage.setItem("usedWheelPieces", JSON.stringify(storageArray));
         return array;
       }
     },
@@ -54,13 +73,19 @@ export default {
       this.wheelPieces = pieces;
       console.log(this.wheelPieces);
 
-      console.log(this.usedWheelPieces);
       setTimeout(() => {
         this.spinning = false;
       }, 5000);
     },
+    initStorage() {
+      let array = localStorage.getItem("usedWheelPieces");
+      if (!array) {
+        localStorage.setItem("usedWheelPieces", JSON.stringify([]));
+      }
+    },
   },
   mounted() {
+    this.initStorage();
     document.addEventListener("click", this.spinWheel);
   },
   beforeUnmount() {
