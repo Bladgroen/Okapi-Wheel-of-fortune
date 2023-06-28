@@ -12,10 +12,15 @@
       </div>
     </div>
   </div>
+  <Drink :currentLetter="currentLetter"></Drink>
 </template>
 
 <script>
+import Drink from "./Drink.vue";
 export default {
+  components: {
+    Drink,
+  },
   data() {
     return {
       wheelPieces: [
@@ -38,6 +43,7 @@ export default {
         "W",
         "Z",
       ],
+      currentLetter: "",
       spinning: false,
     };
   },
@@ -56,12 +62,12 @@ export default {
       }
       const firstValue = array[0];
       const storageArray = JSON.parse(localStorage.getItem("usedWheelPieces"));
-      console.log(storageArray);
       if (storageArray.includes(firstValue)) {
         return this.shuffle(array);
       } else {
         storageArray.push(firstValue);
         localStorage.setItem("usedWheelPieces", JSON.stringify(storageArray));
+        this.currentLetter = firstValue;
         return array;
       }
     },
@@ -71,7 +77,6 @@ export default {
       this.spinning = true;
       const pieces = this.shuffle([...this.wheelPieces]);
       this.wheelPieces = pieces;
-      console.log(this.wheelPieces);
 
       setTimeout(() => {
         this.spinning = false;
