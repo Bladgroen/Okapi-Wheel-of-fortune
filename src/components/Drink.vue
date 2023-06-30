@@ -69,7 +69,7 @@ export default {
           prijs: "€2,20",
         },
         O: {
-          img: "./srcOmer.jpg",
+          img: "./src/Omer.jpg",
           naam: "Omer hoe beter",
           prijs: "€2,20",
         },
@@ -104,7 +104,7 @@ export default {
           prijs: "€2",
         },
         "🌟": {
-          img: "./srcstella.jpg",
+          img: "./src/stella.jpg",
           naam: "🌟 LUCKY 🌟",
           prijs: "€1,20",
         },
