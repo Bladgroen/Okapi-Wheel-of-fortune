@@ -12,7 +12,9 @@
       </div>
     </div>
   </div>
-  <Drink :currentLetter="currentLetter"></Drink>
+  <div v-if="showDrink">
+    <Drink :currentLetter="currentLetter"></Drink>
+  </div>
 </template>
 
 <script>
@@ -28,7 +30,7 @@ export default {
         "B",
         "C",
         "D",
-        "G",
+        "E",
         "H",
         "I",
         "J",
@@ -42,9 +44,12 @@ export default {
         "V",
         "W",
         "Z",
+        "🌟",
+        "G",
       ],
       currentLetter: "",
       spinning: false,
+      showDrink: false,
     };
   },
   methods: {
@@ -73,14 +78,22 @@ export default {
     },
     spinWheel() {
       if (this.spinning) return;
-
-      this.spinning = true;
-      const pieces = this.shuffle([...this.wheelPieces]);
-      this.wheelPieces = pieces;
-
       setTimeout(() => {
-        this.spinning = false;
-      }, 5000);
+        this.spinning = true;
+        const pieces = this.shuffle([...this.wheelPieces]);
+        console.log(pieces);
+        this.wheelPieces = pieces;
+        setTimeout(() => {
+          this.spinning = false;
+          setTimeout(() => {
+            this.showDrink = true;
+            setTimeout(() => {
+              this.showDrink = false;
+              this.spinWheel(); // Call spinWheel again to repeat the process
+            }, 60000); // Wait for 1 minute (60000 milliseconds)
+          }, 1000);
+        }, 5000);
+      }, 1000); // Wait for 1 second (1000 milliseconds)
     },
     initStorage() {
       let array = localStorage.getItem("usedWheelPieces");
@@ -101,7 +114,7 @@ export default {
 
 <style lang="scss" scoped>
 $size: 500;
-$pieceCount: 22;
+$pieceCount: 20;
 $pieceWidth: $size / $pieceCount;
 
 #wheel-container {
@@ -109,7 +122,6 @@ $pieceWidth: $size / $pieceCount;
   position: relative;
   width: #{$size}px;
   height: #{$size}px;
-  background: #ddd;
 
   &:before {
     content: "";
@@ -161,6 +173,14 @@ $pieceWidth: $size / $pieceCount;
     }
     &.piece-2x {
       color: green;
+    }
+
+    &.piece-🌟 {
+      color: red !important;
+      border-left: #{$size / 2}px solid red;
+      span {
+        background-color: red !important;
+      }
     }
     &.piece-4x {
       color: gold;
