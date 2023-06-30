@@ -1,4 +1,5 @@
 <template>
+  <img class="okapiLogo" src="../../public/Okapi.png" />
   <div id="wheel-container">
     <div id="wheel" :class="{ spin: spinning }">
       <div
@@ -90,7 +91,7 @@ export default {
             setTimeout(() => {
               this.showDrink = false;
               this.spinWheel(); // Call spinWheel again to repeat the process
-            }, 60000); // Wait for 1 minute (60000 milliseconds)
+            }, 1800000); // Wait for 1 minute (60000 milliseconds)
           }, 1000);
         }, 5000);
       }, 1000); // Wait for 1 second (1000 milliseconds)
@@ -116,6 +117,11 @@ export default {
 $size: 500;
 $pieceCount: 20;
 $pieceWidth: $size / $pieceCount;
+
+.okapiLogo {
+  width: 300px;
+  height: auto;
+}
 
 #wheel-container {
   padding: 10px;
